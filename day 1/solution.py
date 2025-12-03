@@ -77,7 +77,7 @@ class Solution:
 
         return dial.end_on_zero_count
 
-    def part2(self, input_file="input2.txt") -> int:
+    def part2(self, input_file="input1.txt") -> int:
         """
         Solve part 2 of the puzzle.
 
