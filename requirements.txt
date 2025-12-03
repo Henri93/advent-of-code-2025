@@ -1,3 +1,8 @@
 # Common packages for Advent of Code
 numpy
 requests
+
+# Testing and linting
+pytest
+flake8
+pytest-cov
