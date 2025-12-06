@@ -97,5 +97,32 @@ class TestSolution:
         result = solution.part2(self.get_test_file("test_input1.txt"))
         assert result == 4174379265
 
+    def test_is_invalid_2(self):
+        solution = Solution()
+        assert solution._is_invalid_2(38593859) == True
+        assert solution._is_invalid_2(446446) == True
+        assert solution._is_invalid_2(222222) == True
+        assert solution._is_invalid_2(1188511885) == True
+        assert solution._is_invalid_2(1010) == True
+        assert solution._is_invalid_2(99) == True
+        assert solution._is_invalid_2(11) == True
+        assert solution._is_invalid_2(22) == True
+        assert solution._is_invalid_2(43545) == False
+        assert solution._is_invalid_2(10510) == False
+        assert solution._is_invalid_2(1) == False
+        assert solution._is_invalid_2(0) == False
+        assert solution._is_invalid_2(222) == True
+        assert solution._is_invalid_2(12341234) == True
+        assert solution._is_invalid_2(123123123) == True
+        assert solution._is_invalid_2(1212121212) == True
+        assert solution._is_invalid_2(1111111) == True
+        assert solution._is_invalid_2(123312) == False
+    
+    def test_part2(self):
+        """Test part 2 with real input."""
+        solution = Solution()
+        result = solution.part2(self.get_test_file("input1.txt"))
+        assert result == None
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

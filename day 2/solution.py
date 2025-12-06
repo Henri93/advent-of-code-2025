@@ -70,8 +70,61 @@ class Solution:
             mid += 1
         
         return True
+    
+    def _is_invalid_2(self, num):
+        """
+        Invalid if repeats a sequence of digits any number of times.
+        Observation: the start must be the beginning of the repeating sequence
 
-    def part2(self, input_file="input2.txt") -> int:
+        Idea: 2 pointers: one at start and one traversing. 
+        When we encounter a character that matches start, try checking if it's a repeat.
+        Do this by advancing both pointers and checking equality until firt pointer reached second's inital position. 
+        If this is a repeat then we've locked in our pattern and can keep advcing matching to it.
+        Otherwise go back to the position of the inital char match and continue until passed midpoint.
+        Because if repeats once then it has to be at east half length of total sequence.
+        """
+        chars = list(str(num))
+
+        if len(chars) <= 1:
+            # has to repeat at least twice, so need more than 1 char
+            return False
+        
+        sequence_start = chars[0]
+        for travel_pointer in range(1, (len(chars) // 2) + 1):
+            if chars[travel_pointer] == sequence_start:
+                # check repeat subroutine
+
+                # it would probably be easier to just keep replicating the sequence to test
+                # until it is the length of the input, then check if they are equal.
+                # but the pointers approach is more heady and fun.
+
+                # grab the repeat sequence
+                sequence_to_test = chars[:travel_pointer]
+
+                # Check if total length is divisible by pattern length
+                if len(chars) % len(sequence_to_test) != 0:
+                    continue
+
+                # print(f'Sequence repeat check for {sequence_to_test} at {chars[travel_pointer]}({travel_pointer})')
+
+                # test it until end of chars
+                is_all_repeating = True
+                compare_point = 0
+                for k in range(travel_pointer, len(chars)):
+                    # print(f'checking {chars[k]} and {chars[compare_point]}')
+                    if chars[k] != chars[compare_point]:
+                        # mismatch so break out of the repeat subroutine
+                        is_all_repeating = False
+                        break
+                    compare_point += 1
+                    compare_point = compare_point % len(sequence_to_test)
+
+                if is_all_repeating:
+                    return True
+
+        return False
+
+    def part2(self, input_file="input1.txt") -> int:
         """
         Solve part 2 of the puzzle.
 
@@ -81,7 +134,14 @@ class Solution:
         Returns:
             int: The solution to part 2
         """
-        pass
+        ranges = self._read_ranges(input_file)
+        invalid_ids = []
+        for range_tuple in ranges:
+            for num in range(range_tuple[0], range_tuple[1] + 1):
+                if self._is_invalid_2(num):
+                    invalid_ids.append(num)
+
+        return sum(invalid_ids)
 
 
 def main():
